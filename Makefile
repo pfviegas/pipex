@@ -6,7 +6,7 @@
 #    By: pviegas <pviegas@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/24 16:05:35 by pviegas           #+#    #+#              #
-#    Updated: 2023/07/24 17:03:44 by pviegas          ###   ########.fr        #
+#    Updated: 2023/07/24 17:09:47 by pviegas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,11 +45,11 @@ all: ${NAME}
 
 clean:
 	${RM} ${OBJ_DIR}*.o ${NAME}
-	@cd $(LIBFTDIR) && @$(MAKE) clean
+	@cd $(LIBFTDIR) && $(MAKE) clean
 
 fclean: clean
 	${RM} ${NAME}
-	@cd $(LIBFTDIR) && @$(MAKE) fclean
+	@cd $(LIBFTDIR) && $(MAKE) fclean
 
 re: clean all
 
