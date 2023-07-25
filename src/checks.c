@@ -6,7 +6,7 @@
 /*   By: pviegas <pviegas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 10:53:32 by pviegas           #+#    #+#             */
-/*   Updated: 2023/07/25 16:01:27 by pviegas          ###   ########.fr       */
+/*   Updated: 2023/07/25 17:03:55 by pviegas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,34 +52,67 @@ void	error(int err)
 	perror("Error");
 	exit(err);
 }
-void	execute(char *cmd, char **envp)
+
+void	free_paths(char **paths)
 {
-	char *const argv[] = { "ls", "-l", NULL };
-	ft_printf("executing: %s\n", cmd);
-/*
-	int	i = 0;
-	ft_printf("\nENVP:\n");
-	while (envp[i])
-	{
-		ft_printf("%s\n", envp[i]);
+	int	i;
+
+	i = 0;
+	while (paths[i])
+	{	
+		free(paths[i]);
 		i++;
 	}
-*/
-//	char	**exec_cmd;
+	free(paths);
+}
+
+char	*search_cmd(char **envp, char *cmd)
+{
+	int		i;
+	char	*path;
+	char	*temp;
+	char	**paths;
+
+	i = 0;
+	while (!ft_strnstr(envp[i], "PATH", 4))
+		i++;
+	path = ft_substr(envp[i], 5, ft_strlen(envp[i]));
+	paths = ft_split(path, ':');
+	free (path);
+	i = 0;
+	while (paths[i])
+	{
+		temp = ft_strjoin(paths[i], "/");
+		path = ft_strjoin(temp, cmd);
+		if (access(path, F_OK) != -1)
+			return (path);
+		free(temp);
+		free(path);
+		i++;
+	}
+	free_paths(paths);
+	return (cmd);
+}
+void	execute(char *cmd, char **envp)
+{
+	char	**exec_cmd;
 	char	*path;
 	int		k;
 
-//	exec_cmd = ft_split(cmd, ' ');
-//	cmd = *exec_cmd;
-	path = check_path(envp);
-	ft_printf("\n%s\n", path);
-	if (execve("/bin/ls", argv, envp) == -1) 
+	exec_cmd = ft_split(cmd, ' ');
+	cmd = *exec_cmd;
+	path = search_cmd(envp, cmd);
+	if (!path)
 	{
-        perror("Erro ao executar o programa");
-        exit(2);
-    }
-/*	
-	if (execve(path, &cmd, envp) == -1)
+		k = 0;
+		while (exec_cmd[k])
+		{	
+			free(exec_cmd[k]);
+			k++;
+		}
+		free(exec_cmd);
+		error(5);
+	}
+	if (execve(path, exec_cmd, envp) == -1)
 		error(6);
-*/
 }
