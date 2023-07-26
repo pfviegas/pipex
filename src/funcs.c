@@ -6,7 +6,7 @@
 /*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 10:53:32 by pviegas           #+#    #+#             */
-/*   Updated: 2023/07/26 14:48:58 by paulo            ###   ########.fr       */
+/*   Updated: 2023/07/26 15:43:38 by paulo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,25 @@
 
 void	execute(char *cmd, char **envp)
 {
-	char	**exec_cmd;
+	char	**full_cmd;
 	char	*path;
-	int		k;
+	int		i;
 
-	exec_cmd = ft_split(cmd, ' ');
-	cmd = *exec_cmd;
+	full_cmd = ft_split(cmd, ' ');
+	cmd = *full_cmd;
 	path = search_cmd(envp, cmd);
 	if (!path)
 	{
-		k = 0;
-		while (exec_cmd[k])
-		{	
-			free(exec_cmd[k]);
-			k++;
+		i = 0;
+		while (full_cmd[i])
+		{
+			free(full_cmd[i]);
+			i++;
 		}
-		free(exec_cmd);
+		free(full_cmd);
 		error();
 	}
-	if (execve(path, exec_cmd, envp) == -1)
+	if (execve(path, full_cmd, envp) == -1)
 		error();
 }
 
@@ -48,28 +48,30 @@ char	*search_cmd(char **envp, char *cmd)
 		i++;
 	path = ft_substr(envp[i], 5, ft_strlen(envp[i]));
 	paths = ft_split(path, ':');
-	free (path);
-	i = 0;
-	while (paths[i])
+	i = -1;
+	while (paths[++i])
 	{
 		temp = ft_strjoin(paths[i], "/");
 		path = ft_strjoin(temp, cmd);
-		if (access(path, F_OK) != -1)
-			return (path);
 		free(temp);
+		if (access(path, F_OK) != -1)
+		{
+			free_paths(paths);
+			return (path);
+		}
 		free(path);
-		i++;
 	}
 	free_paths(paths);
 	return (cmd);
 }
+
 void	free_paths(char **paths)
 {
 	int	i;
 
 	i = 0;
 	while (paths[i])
-	{	
+	{
 		free(paths[i]);
 		i++;
 	}
