@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pviegas <pviegas@student.42.fr>            +#+  +:+       +#+         #
+#    By: paulo <paulo@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/24 16:05:35 by pviegas           #+#    #+#              #
-#    Updated: 2023/07/25 13:31:02 by pviegas          ###   ########.fr        #
+#    Updated: 2023/07/26 14:44:51 by paulo            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,14 +17,13 @@ RM				= rm -f
 FLAGS	= -Wall -Wextra -Werror -g -fsanitize=address
 
 INC	= include
-UTILS_PATH	= utils
 LIBFTDIR = libft/
 OBJ_DIR	= obj/
 SRC_DIR = src/
 
 SRC_1 = srcs/pipex.c 
 
-SRC_2 =	checks.c 
+SRC_2 =	funcs.c 
 
 OBJ_1 = $(addprefix $(OBJ_DIR), $(notdir $(SRC_1:.c=.o)))
 OBJ_2 = $(addprefix $(OBJ_DIR), $(notdir $(SRC_2:.c=.o)))

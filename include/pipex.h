@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pviegas <pviegas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 11:02:37 by pviegas           #+#    #+#             */
-/*   Updated: 2023/07/25 13:48:37 by pviegas          ###   ########.fr       */
+/*   Updated: 2023/07/26 14:51:03 by paulo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,11 @@
 
 # include "../libft/libft.h"
 
-char	*check_args(char **argv, char **envp);
-void	check_file(const char *file);
-char	*check_path(char **env);
-void	error(int err);
+static void	child_1(char **argv, int *pipe_fd, char **envp);
+static void	child_2(char **argv, int *pipe_fd, char **envp);
 void	execute(char *cmd, char **envp);
+char	*search_cmd(char **envp, char *cmd);
+void	free_paths(char **paths);
+void	error(void);
 
 #endif
