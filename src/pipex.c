@@ -6,11 +6,29 @@
 /*   By: pviegas <pviegas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 10:43:50 by pviegas           #+#    #+#             */
-/*   Updated: 2023/07/27 11:38:20 by pviegas          ###   ########.fr       */
+/*   Updated: 2023/07/27 14:34:37 by pviegas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
+
+void	error(char *msg)
+{
+	if (!msg)
+		perror("pipex");
+	else
+		ft_printf("pipex: %s\n", msg);
+	exit(EXIT_FAILURE);
+}
+
+void	check_args(int argc)
+{
+	if (argc != 5)
+	{
+		ft_printf("Error: Wrong number of arguments\n");
+		exit(EXIT_FAILURE);
+	}
+}
 
 static void	child_1(char **argv, int *pipe_fd, char **envp)
 {
@@ -51,11 +69,7 @@ int	main(int argc, char **argv, char **envp)
 	pid_t	pid_2;
 	int		stat;
 
-	if (argc != 5)
-	{
-		ft_printf("Error: Wrong number of arguments\n");
-		exit(EXIT_FAILURE);
-	}
+	check_args(argc);
 	if (pipe(pipe_fd) < 0)
 		error(NULL);
 	pid_1 = fork();
