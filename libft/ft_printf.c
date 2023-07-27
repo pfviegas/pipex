@@ -6,7 +6,7 @@
 /*   By: pviegas <pviegas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 16:55:51 by pviegas           #+#    #+#             */
-/*   Updated: 2023/07/11 16:31:08 by pviegas          ###   ########.fr       */
+/*   Updated: 2023/07/27 11:21:54 by pviegas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	ft_printf(const char *format, ...)
 		}
 		else
 		{
-			write(1, &format[i], 1);
+			write(2, &format[i], 1);
 			counter++;
 		}
 	}

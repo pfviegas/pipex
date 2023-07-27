@@ -6,7 +6,7 @@
 /*   By: pviegas <pviegas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:30:37 by pviegas           #+#    #+#             */
-/*   Updated: 2023/04/27 16:54:49 by pviegas          ###   ########.fr       */
+/*   Updated: 2023/07/27 11:22:25 by pviegas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_putnbr_ct(int n, size_t *counter)
 	nb = (long)n;
 	if (nb < 0)
 	{
-		write(1, "-", 1);
+		write(2, "-", 1);
 		nb = -nb;
 		(*counter)++;
 	}
@@ -29,6 +29,6 @@ void	ft_putnbr_ct(int n, size_t *counter)
 		ft_putnbr_ct(nb / 10, counter);
 	}
 	c = (char)(nb % 10 + '0');
-	write(1, &c, 1);
+	write(2, &c, 1);
 	(*counter)++;
 }

@@ -3,16 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   funcs.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: paulo <paulo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: pviegas <pviegas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 10:53:32 by pviegas           #+#    #+#             */
-/*   Updated: 2023/07/26 15:43:38 by paulo            ###   ########.fr       */
+/*   Updated: 2023/07/27 11:49:54 by pviegas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 
-void	execute(char *cmd, char **envp)
+static void	close_pipe(int *fds)
+{
+	close(fds[0]);
+	close(fds[1]);
+}
+
+void	free_paths(char **paths)
+{
+	int	i;
+
+	i = 0;
+	if (!paths)
+		return ;
+	while (paths[i])
+	{
+		free(paths[i]);
+		i++;
+	}
+	free(paths);
+}
+
+void	execute(char *cmd, char **envp, int *dup_fd)
 {
 	char	**full_cmd;
 	char	*path;
@@ -23,17 +44,17 @@ void	execute(char *cmd, char **envp)
 	path = search_cmd(envp, cmd);
 	if (!path)
 	{
-		i = 0;
-		while (full_cmd[i])
-		{
-			free(full_cmd[i]);
-			i++;
-		}
-		free(full_cmd);
-		error();
+		free_paths(full_cmd);
+		close_pipe(dup_fd);
+		error("command not found");
 	}
 	if (execve(path, full_cmd, envp) == -1)
-		error();
+	{
+		free_paths(full_cmd);
+		close_pipe(dup_fd);
+		free(path);
+		error(NULL);
+	}
 }
 
 char	*search_cmd(char **envp, char *cmd)
@@ -44,12 +65,16 @@ char	*search_cmd(char **envp, char *cmd)
 	char	**paths;
 
 	i = 0;
+	if (!cmd || ft_strchr(cmd, '/') != NULL)
+		return (cmd);
 	while (!ft_strnstr(envp[i], "PATH", 4))
 		i++;
 	path = ft_substr(envp[i], 5, ft_strlen(envp[i]));
 	paths = ft_split(path, ':');
-	i = -1;
-	while (paths[++i])
+	if (!paths[0])
+		return (NULL);
+	i = 0;
+	while (paths[i])
 	{
 		temp = ft_strjoin(paths[i], "/");
 		path = ft_strjoin(temp, cmd);
@@ -60,26 +85,17 @@ char	*search_cmd(char **envp, char *cmd)
 			return (path);
 		}
 		free(path);
-	}
-	free_paths(paths);
-	return (cmd);
-}
-
-void	free_paths(char **paths)
-{
-	int	i;
-
-	i = 0;
-	while (paths[i])
-	{
-		free(paths[i]);
 		i++;
 	}
-	free(paths);
+	free_paths(paths);
+	return (NULL);
 }
 
-void	error(void)
+void	error(char *msg)
 {
-	perror("Error");
+	if (!msg)
+		perror("pipex");
+	else
+		ft_printf("pipex: %s\n", msg);
 	exit(EXIT_FAILURE);
 }

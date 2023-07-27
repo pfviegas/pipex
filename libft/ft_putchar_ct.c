@@ -6,7 +6,7 @@
 /*   By: pviegas <pviegas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:19:58 by pviegas           #+#    #+#             */
-/*   Updated: 2023/04/27 16:55:03 by pviegas          ###   ########.fr       */
+/*   Updated: 2023/07/27 11:22:25 by pviegas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 void	ft_putchar_ct(char c, size_t *counter)
 {
-	write(1, &c, 1);
+	write(2, &c, 1);
 	(*counter)++;
 }
