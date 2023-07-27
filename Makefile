@@ -6,7 +6,7 @@
 #    By: pviegas <pviegas@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/24 16:05:35 by pviegas           #+#    #+#              #
-#    Updated: 2023/07/27 10:17:24 by pviegas          ###   ########.fr        #
+#    Updated: 2023/07/27 13:46:48 by pviegas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME	= pipex
 
 CC		= cc
 RM				= rm -f
-FLAGS	= -Wall -Wextra -Werror -g -fsanitize=address
+FLAGS	= -Wall -Wextra -Werror -g #-fsanitize=address
 
 INC	= include
 LIBFTDIR = libft/
