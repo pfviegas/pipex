@@ -6,7 +6,7 @@
 /*   By: pviegas <pviegas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 11:02:37 by pviegas           #+#    #+#             */
-/*   Updated: 2023/07/27 14:34:54 by pviegas          ###   ########.fr       */
+/*   Updated: 2023/08/15 15:53:30 by pviegas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@
 
 void		error(char *msg);
 void		check_args(int argc);
-static void	child_1(char **argv, int *pipe_fd, char **envp);
-static void	child_2(char **argv, int *pipe_fd, char **envp);
-static void	close_pipe(int *fds);
+void		child_1(char **argv, int *pipe_fd, char **envp);
+void		child_2(char **argv, int *pipe_fd, char **envp);
+void		close_pipe(int *fds);
 void		free_paths(char **paths);
 void		execute(char *cmd, char **envp, int *dup_fd);
 char		*extract_path(char **envp, char *cmd);

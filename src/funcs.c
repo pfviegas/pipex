@@ -6,13 +6,13 @@
 /*   By: pviegas <pviegas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 10:53:32 by pviegas           #+#    #+#             */
-/*   Updated: 2023/07/28 13:02:01 by pviegas          ###   ########.fr       */
+/*   Updated: 2023/08/15 15:52:32 by pviegas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
 
-static void	close_pipe(int *fds)
+void	close_pipe(int *fds)
 {
 	close(fds[0]);
 	close(fds[1]);
@@ -37,7 +37,6 @@ void	execute(char *cmd, char **envp, int *dup_fd)
 {
 	char	**full_cmd;
 	char	*path;
-	int		i;
 
 	full_cmd = ft_split(cmd, ' ');
 	cmd = *full_cmd;
@@ -60,7 +59,6 @@ char	*extract_path(char **envp, char *cmd)
 {
 	int		i;
 	char	*path;
-	char	*temp;
 	char	**paths;
 
 	i = 0;

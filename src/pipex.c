@@ -6,7 +6,7 @@
 /*   By: pviegas <pviegas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 10:43:50 by pviegas           #+#    #+#             */
-/*   Updated: 2023/07/28 14:16:25 by pviegas          ###   ########.fr       */
+/*   Updated: 2023/08/15 15:53:16 by pviegas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	check_args(int argc)
 	}
 }
 
-static void	child_1(char **argv, int *pipe_fd, char **envp)
+void	child_1(char **argv, int *pipe_fd, char **envp)
 {
 	int	infile;
 	int	dups[2];
@@ -46,7 +46,7 @@ static void	child_1(char **argv, int *pipe_fd, char **envp)
 	execute(argv[2], envp, dups);
 }
 
-static void	child_2(char **argv, int *pipe_fd, char **envp)
+void	child_2(char **argv, int *pipe_fd, char **envp)
 {
 	int	outfile;
 	int	dups[2];
